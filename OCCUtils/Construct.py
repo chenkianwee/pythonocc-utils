@@ -56,14 +56,14 @@ from OCC.TColgp import TColgp_SequenceOfVec, TColgp_HArray1OfPnt
 from OCC.gp import (gp_Vec, gp_Pnt, gp_Dir, gp_Trsf, gp_Ax1, gp_Quaternion,
                     gp_Circ, gp_Pln)
 
-from OCCUtils.Common import (TOLERANCE, assert_isdone, to_tcol_, to_adaptor_3d,
+from Common import (TOLERANCE, assert_isdone, to_tcol_, to_adaptor_3d,
                              vertex2pnt, smooth_pnts, points_to_bspline,
                              project_point_on_curve)
-from OCCUtils.types_lut import ShapeToTopology
-from OCCUtils.Topology import Topo
+from types_lut import ShapeToTopology
+from Topology import Topo
 
 
-EPSILON = TOLERANCE = 1e-6
+EPSILON = TOLERANCE = 1e-5
 ST = ShapeToTopology()
 
 
@@ -609,7 +609,7 @@ def boolean_cut(shapeToCutFrom, cuttingShape):
     from OCC.BRepAlgoAPI import BRepAlgoAPI_Cut
     try:
         cut = BRepAlgoAPI_Cut(shapeToCutFrom, cuttingShape)
-        print("Can work?", cut.BuilderCanWork())
+        #print("Can work?", cut.BuilderCanWork())
         _error = {0: '- Ok',
                   1: '- The Object is created but Nothing is Done',
                   2: '- Null source shapes is not allowed',
@@ -619,11 +619,11 @@ def boolean_cut(shapeToCutFrom, cuttingShape):
                   6: '- Unknown operation is not allowed',
                   7: '- Can not allocate memory for the Builder',
                   }
-        print("Error status:", _error[cut.ErrorStatus()])
+        #print("Error status:", _error[cut.ErrorStatus()])
         cut.RefineEdges()
         cut.FuseEdges()
         shp = cut.Shape()
-        cut.Destroy()
+        #cut.Destroy()
         return shp
     except:
         print("Failed to boolean cut")
@@ -636,7 +636,7 @@ def boolean_fuse(shapeToCutFrom, joiningShape):
     join.RefineEdges()
     join.FuseEdges()
     shape = join.Shape()
-    join.Destroy()
+    #join.Destroy()
     return shape
 
 
@@ -746,7 +746,7 @@ def mirror_axe2(brep, axe2, copy=False):
         return brep_trns.Shape()
 
 
-def rotate(brep, axe, degree, copy=False):
+def rotate(brep, axe, degree, copy=True):
     '''
     @param brep:
     @param axe:

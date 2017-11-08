@@ -31,10 +31,10 @@ from OCC.BRep import BRep_Tool, BRep_Tool_Continuity
 from OCC.BRepIntCurveSurface import BRepIntCurveSurface_Inter
 
 # high-level
-from OCCUtils.Common import vertex2pnt, minimum_distance, assert_isdone, fix_continuity
-from OCCUtils.Construct import make_edge
-from OCCUtils.types_lut import geom_lut
-from OCCUtils.base import BaseObject
+from Common import vertex2pnt, minimum_distance, assert_isdone, fix_continuity
+from Construct import make_edge
+from types_lut import geom_lut
+from base import BaseObject
 
 
 class IntersectCurve(object):
@@ -320,7 +320,8 @@ class Edge(TopoDS_Edge, BaseObject):
         '''
         if isinstance(pnt_or_vertex, TopoDS_Vertex):
             pnt_or_vertex = vertex2pnt(pnt_or_vertex)
-
+            
+        self.curve
         poc = GeomAPI_ProjectPointOnCurve(pnt_or_vertex, self.curve_handle)
         return poc.LowerDistanceParameter(), poc.NearestPoint()
 

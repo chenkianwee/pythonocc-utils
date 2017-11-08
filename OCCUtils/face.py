@@ -31,10 +31,10 @@ from OCC.GeomProjLib import geomprojlib
 from OCC.Adaptor3d import Adaptor3d_IsoCurve
 from OCC.gp import gp_Pnt2d, gp_Dir
 
-from OCCUtils.base import BaseObject
-from OCCUtils.edge import Edge
-from OCCUtils.Construct import TOLERANCE, to_adaptor_3d
-from OCCUtils.Topology import Topo, WireExplorer
+from base import BaseObject
+from edge import Edge
+from Construct import TOLERANCE, to_adaptor_3d
+from Topology import Topo, WireExplorer
 
 
 class DiffGeomSurface(object):
@@ -59,7 +59,7 @@ class DiffGeomSurface(object):
 
         _domain = self.instance.domain()
         if u in _domain or v in _domain:
-            print('<<<CORRECTING DOMAIN...>>>')
+            #print('<<<CORRECTING DOMAIN...>>>')
             div = 1000
             delta_u, delta_v = (_domain[0] - _domain[1])/div, (_domain[2] - _domain[3])/div
 
@@ -259,7 +259,7 @@ class Face(TopoDS_Face, BaseObject):
         '''checks if the surface is planar within a tolerance
         :return: bool, gp_Pln
         '''
-        print(self.surface_handle)
+        #print(self.surface_handle)
         is_planar_surface = GeomLib_IsPlanarSurface(self.surface_handle, tol)
         return is_planar_surface.IsPlanar()
 
